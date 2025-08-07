@@ -1,3 +1,12 @@
+*{
+    font-family: monospace;
+    font-size: x-large;
+}
+
+h1{
+    font-size: 64px;
+}
+
 body{
     height: 90vh;
     display: flex;
@@ -16,3 +25,9 @@ body{
     margin-bottom: 16px;
 }
 
+#promptText{
+    min-width: 600px;
+    border: 2px solid black;
+    border-radius: 4px;
+    height: 24px;
+}

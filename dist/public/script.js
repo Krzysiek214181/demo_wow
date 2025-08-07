@@ -1,17 +1,19 @@
-import { send } from "process";
-
 document.addEventListener('DOMContentLoaded', async () => {
     const chatBlock = document.getElementById("chatBlock");
-    const sendBtn = document.getElementById("sendBtn");
+    const promptForm = document.getElementById('promptForm');
     const promptText = document.getElementById('promptText');
 
     promptText.focus();
 
-    sendBtn.addEventListener('click', async ()=>{
-        const prompt = promptText.value;
+    promptForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-        chatBlock.innerHTML += `<br> <strong>USER:</strong> ${prompt} <br>`;
-        promptText.value = "";
+        const formData = new FormData(promptForm);
+        const prompt = formData.get('promptText');
+        promptForm.reset();
+
+        chatBlock.innerHTML += `<br> <strong>USER:</strong>`;
+        chatBlock.innerHTML += prompt;
         promptText.focus();
 
         const response = await fetch("http://localhost:2137/test", {
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
 
-        chatBlock.innerHTML += "<strong> GPT:</strong>"
+        chatBlock.innerHTML += "<br><strong> GPT:</strong>"
 
         while(true){
             const {value, done} = await reader?.read();
