@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const chatBlock = document.getElementById("chatBlock");
     const promptForm = document.getElementById('promptForm');
     const promptText = document.getElementById('promptText');
+    const clearContextBtn = document.getElementById('clearContextBtn');
+
+    clearContextBtn.addEventListener('click',()=>{
+        fetch('http://localhost:2137/clearContext');
+        chatBlock.innerHTML = "";
+    });
 
     chatBlock.addEventListener('wheel', () => {
         if (autoScrollInterval) {
@@ -25,8 +31,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         promptForm.reset();
         
         const userDiv = document.createElement('div');
+        userDiv.classList.add('messageDiv');
         userDiv.innerHTML += `<br> <strong>USER:</strong><br>`;
-        userDiv.innerHTML += prompt;
+        userDiv.innerHTML += `<p>${prompt}</p>`;
         chatBlock.appendChild(userDiv);
         promptText.focus();
 
@@ -45,11 +52,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
 
-        chatBlock.innerHTML += "<br><strong> GPT:</strong>"
         let markdownBuffer = ""
         const aiDiv = document.createElement('div');
-        aiDiv.style.marginTop = "0";
+        aiDiv.innerHTML += "<br><strong> AI:</strong>"
         chatBlock.appendChild(aiDiv);
+        const aiResponseDiv = document.createElement('div');
+        aiResponseDiv.classList.add('messageDiv');
+        aiDiv.appendChild(aiResponseDiv);
 
         startAutoScroll(chatBlock);
 
@@ -63,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const chunkText = decoder.decode(value, {stream: true})
             const data = handleChunk(chunkText, markdownBuffer);
             markdownBuffer = data.newBuffer;
-            aiDiv.innerHTML = data.parsed;
+            aiResponseDiv.innerHTML = data.parsed;
             hljs.highlightAll();
             console.log(chunkText);
         };

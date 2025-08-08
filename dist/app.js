@@ -7,6 +7,9 @@ const app = express();
 app.use(express.json());
 const openaiService = new OpenAIService();
 app.use(express.static("./dist/public"));
+app.get("/clearContext", () => {
+    messages = [];
+});
 app.post("/test", async (req, res) => {
     const prompt = req.body.prompt;
     let fullresponse = '';

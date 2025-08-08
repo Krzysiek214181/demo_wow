@@ -7,6 +7,18 @@ h1{
     font-size: 64px;
 }
 
+h1 strong{
+    font-size: inherit;
+}
+
+p{
+    margin-top: 0;
+}
+
+.messageDiv :last-child{
+    margin-bottom: 0;
+}
+
 body{
     height: 90vh;
     display: flex;

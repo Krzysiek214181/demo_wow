@@ -11,12 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 </head>
 <body>
-    <h1>demo</h1>
+    <h1 style="font-family: 'Times New Roman', Times, serif;">demo</h1>
     <div id="chatBlock" class="test">
     </div>
-    <form id="promptForm">
-        <input type="text" placeholder="input your prompt" name="promptText" id="promptText">
-        <button id="sendBtn" type="submit">send</button>
-    </form>
+    <div style="display: flex; gap: 8px;">
+        <form id="promptForm">
+            <input type="text" placeholder="input your prompt" name="promptText" id="promptText">
+            <button id="sendBtn" type="submit">send</button>
+        </form>
+        <button id="clearContextBtn">clear_context</button>
+    </div>
 </body>
 </html>
