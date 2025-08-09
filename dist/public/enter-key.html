@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>authorization</title>
+
+    <style>
+        *{
+            font-family: monospace;
+            font-size: x-large;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 64px;">sonrai demo</h1>
+    <form style="display: flex; flex-direction: column;" id="apiKeyForm">
+        <p>input your apiKey here</p>
+        <input type="text" name="apiKey" id="apiKey" style="margin-bottom: 16px;">
+        <button id="submitBtn" type="submit">submit</button>
+    </form>
+
+    <script>
+        const apiKeyForm = document.getElementById("apiKeyForm");
+        
+        apiKeyForm.addEventListener('submit', (event)=>{
+            event.preventDefault();
+
+            const formData = new FormData(apiKeyForm);
+            const apiKey = formData.get('apiKey');
+
+            if(!apiKey){
+                alert("input api key");
+                return;
+            };
+
+            document.cookie = `apiKey=${apiKey}; max-age=604800; path=/; samesite=lax`;
+            console.log("Cookie after set:", document.cookie);
+
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>

@@ -68,6 +68,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         });
 
+        if(!response.ok){
+            if (response.status === 401){
+                const error = await response.text();
+                alert(error);
+                return;
+            };
+        };
+
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
 
