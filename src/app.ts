@@ -7,6 +7,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 
+//options
+const PORT = 8080;
+
 type messagesObject = {
     [username: string]: ChatCompletionMessageParam[]
 }
@@ -111,6 +114,6 @@ app.post("/test", async(req, res) =>{
     });
 });
 
-app.listen(2137, ()=>{
-    console.log("listening on port 2137");
+app.listen(PORT, ()=>{
+    console.log(`listening on port ${PORT}`);
 });
