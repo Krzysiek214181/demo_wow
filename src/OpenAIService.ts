@@ -8,16 +8,7 @@ export class OpenAIService{
         this.openai = new OpenAI();
     };
 
-    async *streamCompletion(prompt: string, model: string = 'gpt-4o-mini', pastmessages?: ChatCompletionMessageParam[]){
-        let messages: ChatCompletionMessageParam[] = [];
-
-        if(pastmessages) messages = pastmessages;
-
-        messages.push({
-            "role": "user",
-            "content": prompt
-        });
-
+    async *streamCompletion(model: string = 'gpt-4o-mini', messages: ChatCompletionMessageParam[]){
         try{
             const response = await this.openai.chat.completions.create({
                 "model": model,

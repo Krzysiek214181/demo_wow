@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const promptText = document.getElementById('promptText');
     const clearContextBtn = document.getElementById('clearContextBtn');
     const sendBtn = document.getElementById('sendBtn');
+    const logOutBtn = document.getElementById('logOutBtn');
 
     clearContextBtn.addEventListener('click',()=>{
         fetch('http://localhost:2137/clearContext');
         chatBlock.innerHTML = "";
+    });
+
+    logOutBtn.addEventListener('click', ()=>{
+        document.cookie = "apiKey=; max-age=0; path=/;";
+        location.reload();
     });
 
     //auto resize for input

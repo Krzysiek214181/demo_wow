@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 *{
-    font-family: monospace;
-    font-size: x-large;
+    font-family: 'poppins';
+    font-size: large;
 }
 
 h1{

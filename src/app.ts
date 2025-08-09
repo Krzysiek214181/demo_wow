@@ -7,7 +7,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 
-let messages: ChatCompletionMessageParam[] = [];
+type messagesObject = {
+    [username: string]: ChatCompletionMessageParam[]
+}
+
+let messages: messagesObject= {};
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -27,8 +31,14 @@ app.get("/", (req, res)=>{
     const apiKey = req.cookies ? req.cookies.apiKey : null;
 
     if(!apiKey){
-        console.log("no api key");
         return res.redirect('/enter-key');
+    };
+
+    const keyData = APIkeys.find((k) => k.key === apiKey);
+
+    if(!keyData){
+        res.status(401).send("invalid apiKey");
+        return;
     };
 
     res.sendFile(path.join(__dirname, 'public', 'demo.html'));
@@ -38,8 +48,22 @@ app.get('/enter-key', (req,res) =>{
     res.sendFile(path.join(__dirname, 'public', 'enter-key.html'));
 });
 
-app.get("/clearContext", ()=>{
-    messages = [];
+app.get("/clearContext", (req, res)=>{
+    const apiKey = req.cookies? req.cookies.apiKey: null;
+    if(!apiKey){
+        res.status(401).send("no apiKey found!");
+        return;
+    };
+
+    const keyData = APIkeys.find((k) => k.key === apiKey);
+
+    if(!keyData){
+        res.status(401).send("invalid apiKey");
+        return;
+    };
+
+    const username = keyData.user;
+    messages[username] = [];
 });
 
 app.post("/test", async(req, res) =>{
@@ -57,10 +81,19 @@ app.post("/test", async(req, res) =>{
         return;
     };
 
+    const username = keyData.user;
     const prompt = req.body.prompt;
+
+    if(!messages[username]) messages[username] = [];
+
+    messages[username].push({
+        role: 'user',
+        content: prompt
+    });
+
     let fullresponse = '';
 
-    const response = openaiService.streamCompletion(prompt, undefined, messages);
+    const response = openaiService.streamCompletion(undefined, messages[username]);
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
@@ -72,9 +105,9 @@ app.post("/test", async(req, res) =>{
         fullresponse += part;
     };
     res.end();
-    messages.push({
-        "role": "assistant",
-        "content": fullresponse
+    messages[username].push({
+        role: "assistant",
+        content: fullresponse
     });
 });
 

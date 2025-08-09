@@ -4,14 +4,7 @@ export class OpenAIService {
         this.openai = new OpenAI();
     }
     ;
-    async *streamCompletion(prompt, model = 'gpt-4o-mini', pastmessages) {
-        let messages = [];
-        if (pastmessages)
-            messages = pastmessages;
-        messages.push({
-            "role": "user",
-            "content": prompt
-        });
+    async *streamCompletion(model = 'gpt-4o-mini', messages) {
         try {
             const response = await this.openai.chat.completions.create({
                 "model": model,
