@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+//options
+const PORT = 8080;
 let messages = {};
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,6 +88,6 @@ app.post("/test", async (req, res) => {
         content: fullresponse
     });
 });
-app.listen(2137, () => {
-    console.log("listening on port 2137");
+app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`);
 });

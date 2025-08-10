@@ -1,5 +1,5 @@
 let autoScrollInterval = null;
-const DOMAIN = 'https://your_domain.xyz'
+const DOMAIN = 'https://demo.xxxx.xyz';
 
 document.addEventListener('DOMContentLoaded', async () => {
     hljs.configure({
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const logOutBtn = document.getElementById('logOutBtn');
 
     clearContextBtn.addEventListener('click',()=>{
-        fetch(`${domain}/clearContext`);
+        fetch(`${DOMAIN}/clearContext`);
         chatBlock.innerHTML = "";
     });
 
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         chatBlock.scrollTop = userDiv.offsetTop;
 
-        const response = await fetch(`${domain}/test`, {
+        const response = await fetch(`${DOMAIN}/test`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

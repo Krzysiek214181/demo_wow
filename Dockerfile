@@ -10,4 +10,4 @@ COPY dist/ ./dist
 
 ENV NODE_ENV=production
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/app.js"]
