@@ -24,7 +24,5 @@ export class OpenAIService{
             console.error("error while streaming response");
             throw error;
         };
-
     };
-
 };

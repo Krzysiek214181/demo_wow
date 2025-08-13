@@ -1,5 +1,5 @@
 let autoScrollInterval = null;
-const DOMAIN = 'https://demo.xxxx.xyz';
+const DOMAIN = 'http://localhost:8090';
 
 document.addEventListener('DOMContentLoaded', async () => {
     hljs.configure({
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     clearContextBtn.addEventListener('click',()=>{
         fetch(`${DOMAIN}/clearContext`);
-        chatBlock.innerHTML = "";
+        location.reload();
     });
 
     logOutBtn.addEventListener('click', ()=>{
